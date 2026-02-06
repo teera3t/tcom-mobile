@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T-COM Mobile - ค้นหาสินค้า</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; display: flex; justify-content: center; padding: 20px; }
+        .container { background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        h2 { color: #2c3e50; margin-bottom: 1.5rem; }
+        .search-box { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; outline: none; transition: border-color 0.3s; }
+        .search-box:focus { border-color: #3498db; }
+        .result-card { margin-top: 20px; padding: 15px; border-radius: 10px; display: none; background-color: #e8f4fd; border-left: 5px solid #3498db; }
+        .location-num { font-size: 24px; font-weight: bold; color: #e74c3c; display: block; margin-top: 5px; }
+        .footer { margin-top: 20px; font-size: 12px; color: #888; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>ทีคอมโมบาย</h2>
+    <p>พิมพ์ชื่อสินค้าเพื่อหาตำแหน่ง</p>
+    
+    <input list="products" id="searchInput" class="search-box" placeholder="ค้นหาสินค้า..." oninput="findLocation()">
+    
+    <datalist id="products">
+        <option value="สายชาร์จ iPhone">
+        <option value="สายชาร์จ Type-C">
+        <option value="หน้าจอ Samsung A54">
+        <option value="แบตเตอรี่สำรอง 10000mAh">
+        <option value="เคสใสกันกระแทก">
+        </datalist>
+
+    <div id="result" class="result-card">
+        <span id="productNameDisplay" style="font-weight: bold;"></span> อยู่ที่หมายเลข:
+        <span id="locationDisplay" class="location-num"></span>
+    </div>
+
+    <div class="footer">สแกน QR เพื่อเข้าใช้งาน T-COM Mobile</div>
+</div>
+
+<script>
+    // ฐานข้อมูลจำลอง (คุณสามารถเพิ่มข้อมูลตรงนี้ได้)
+    const inventory = [
+        { name: "สายชาร์จ iPhone", loc: "A-01" },
+        { name: "สายชาร์จ Type-C", loc: "A-02" },
+        { name: "หน้าจอ Samsung A54", loc: "B-15" },
+        { name: "แบตเตอรี่สำรอง 10000mAh", loc: "C-03" },
+        { name: "เคสใสกันกระแทก", loc: "D-09" }
+    ];
+
+    function findLocation() {
+        const input = document.getElementById('searchInput').value;
+        const resultDiv = document.getElementById('result');
+        const locDisplay = document.getElementById('locationDisplay');
+        const nameDisplay = document.getElementById('productNameDisplay');
+
+        // ค้นหาข้อมูลที่ตรงกัน
+        const item = inventory.find(i => i.name === input);
+
+        if (item) {
+            nameDisplay.innerText = item.name;
+            locDisplay.innerText = item.loc;
+            resultDiv.style.display = 'block';
+        } else {
+            resultDiv.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>
